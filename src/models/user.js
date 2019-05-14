@@ -1,45 +1,69 @@
+'use strict';
 import mongoose from 'mongoose';
-
 import bcrypt from 'bcrypt';
 import isEmail from 'validator/lib/isEmail';
 
 const userSchema = new mongoose.Schema({
-  username: {
+  
+  company_name: {
     type: String,
-    unique: true,
-    required: true,
+  },
+
+  surname: {
+    type: String,
+  },
+
+  othernames: {
+    type: String,
+  },
+
+  phonenumber: {
+    type: String,
+  },
+
+  company_address: {
+    type: String,
   },
   email: {
     type: String,
-    unique: true,
-    required: true,
-    validate: [isEmail, 'No valid email address provided.'],
   },
+
+  description: {
+    type: String,
+  },
+
   password: {
     type: String,
-    required: true,
-    minlength: 7,
     maxlength: 42,
   },
+
   role: {
     type: String,
   },
-});
 
-userSchema.statics.findByLogin = async function(login) {
+  created_at: {type: Date, default: new Date()},
+  updated_at: {type: Date, default: new Date()}
+}
+
+);
+
+
+userSchema.index({ phonenumber: 1}, { unique: true});
+
+userSchema.statics.findByLogin = async function(username) {
   let user = await this.findOne({
-    username: login,
+    username: username,
   });
 
   if (!user) {
-    user = await this.findOne({ email: login });
+    user = await this.findOne({ email: username });
   }
 
   return user;
 };
 
 userSchema.pre('remove', function(next) {
-  this.model('Message').deleteMany({ userId: this._id }, next);
+  this.model('Product').deleteMany({ userId: this._id }, next);
 });
 
 userSchema.pre('save', async function() {

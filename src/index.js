@@ -5,17 +5,16 @@ import http from 'http';
 import jwt from 'jsonwebtoken';
 import DataLoader from 'dataloader';
 import express from 'express';
-import {
-  ApolloServer,
-  AuthenticationError,
-} from 'apollo-server-express';
-
+import config from './config';
+import {ApolloServer, AuthenticationError,} from 'apollo-server-express';
+import log from './utils/Logger';
 import schema from './schema';
 import resolvers from './resolvers';
 import models, { connectDb } from './models';
 import loaders from './loaders';
 
 const app = express();
+log.info(`Starting ${config.serviceName}  server`);
 
 app.use(cors());
 
@@ -26,7 +25,7 @@ const getMe = async req => {
 
   if (token) {
     try {
-      return await jwt.verify(token, process.env.SECRET);
+      return await jwt.verify(token, config.APP_SECRET);
     } catch (e) {
       throw new AuthenticationError(
         'Your session expired. Sign in again.',
@@ -69,7 +68,7 @@ const server = new ApolloServer({
       return {
         models,
         me,
-        secret: process.env.SECRET,
+        secret: config.APP_SECRET,
         loaders: {
           user: new DataLoader(keys =>
             loaders.user.batchUsers(keys, models),
@@ -85,61 +84,85 @@ server.applyMiddleware({ app, path: '/graphql' });
 const httpServer = http.createServer(app);
 server.installSubscriptionHandlers(httpServer);
 
-const isTest = !!process.env.TEST_DATABASE_URL;
-const isProduction = process.env.NODE_ENV === 'production';
-const port = process.env.PORT || 8000;
-
 connectDb().then(async () => {
-  if (isTest || isProduction) {
-    // reset database
-    await Promise.all([
-      models.User.deleteMany({}),
-      models.Message.deleteMany({}),
-    ]);
+  await Promise.all([
+    models.User.deleteMany({}),
+    models.Product.deleteMany({}),
+  ]);
 
-    createUsersWithMessages(new Date());
-  }
+  createUsersWithMessages(new Date());
+  httpServer.listen(config.port, () => {
+    log.info(`Started ${config.serviceName} server on port ${config.port}.`);
 
-  httpServer.listen({ port }, () => {
-    console.log(`Apollo Server on http://localhost:${port}/graphql`);
   });
-});
+}).catch((error)=>
+  log.error(`${error} while connecting to the DB `)
+);
 
 const createUsersWithMessages = async date => {
+
+
+
   const user1 = new models.User({
-    username: 'rwieruch',
-    email: 'hello@robin.com',
-    password: 'rwieruch',
+    email: 'admin@gmail.com',
+    password: 'password',
+    surname:'Dihweng',
+    othernames: 'Albert',
+    phonenumber: '07038602624',
+    company_name:'Dihweng and Co.',
+    company_address: 'nHub Nigeria',
+    description: 'General contractor and dealers of all kinds of Products',
+
     role: 'ADMIN',
   });
 
   const user2 = new models.User({
-    username: 'ddavids',
-    email: 'hello@david.com',
-    password: 'ddavids',
+    email: 'eddie@gmail.com',
+    password: 'password',
+    surname:'Edward',
+    othernames: 'Obande',
+    phonenumber: '08103727918',
+    company_name:'Eddie and Co.',
+    company_address: 'Rayfield Jos',
+    description: 'General contractor and dealers of all kinds of Products',
   });
 
-  const message1 = new models.Message({
-    text: 'Published the Road to learn React',
+  const product1 = new models.Product({
+    name: 'Dangote Cement',
+    manufacturer: 'Dangote Cement Company',
+    price_per_unit: '1200',
+    category: 'Building Material',
+    description: '50KG bag of Dangote portland cement',
+    company_name: 'Dihweng and Co.',
     createdAt: date.setSeconds(date.getSeconds() + 1),
     userId: user1.id,
   });
 
-  const message2 = new models.Message({
-    text: 'Happy to release ...',
+  const product2 = new models.Product({
+    name: 'LG Television',
+    manufacturer: 'LG Electronics',
+    price_per_unit: '112200',
+    category: 'Office Electronics',
+    description: 'LG Electronics 42\' colored television',
+    company_name: 'Eddie and Co.',
     createdAt: date.setSeconds(date.getSeconds() + 1),
     userId: user2.id,
   });
 
-  const message3 = new models.Message({
-    text: 'Published a complete ...',
+  const product3 = new models.Product({
+    name: 'Dangote Cement',
+    manufacturer: 'Dangote Cement Company',
+    price_per_unit: '1150',
+    category: 'Building Material',
+    description: '50KG bag of Dangote portland cement',
+    company_name: 'Eddie and Co.',
     createdAt: date.setSeconds(date.getSeconds() + 1),
     userId: user2.id,
   });
 
-  await message1.save();
-  await message2.save();
-  await message3.save();
+  await product1.save();
+  await product2.save();
+  await product3.save();
 
   await user1.save();
   await user2.save();

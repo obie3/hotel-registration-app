@@ -12,14 +12,14 @@ export const isAdmin = combineResolvers(
       : new ForbiddenError('Not authorized as admin.'),
 );
 
-export const isMessageOwner = async (
+export const isProductOwner = async (
   parent,
   { id },
   { models, me },
 ) => {
-  const message = await models.Message.findById(id);
+  const product = await models.Product.findById(id);
 
-  if (message.userId != me.id) {
+  if (product.userId != me.id) {
     throw new ForbiddenError('Not authenticated as owner.');
   }
 

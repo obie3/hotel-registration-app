@@ -1,3 +1,4 @@
+'use strict';
 import { gql } from 'apollo-server-express';
 
 export default gql`
@@ -9,12 +10,17 @@ export default gql`
 
   extend type Mutation {
     signUp(
-      username: String!
-      email: String!
+      company_name: String!
+      surname: String!
+      othernames: String!
+      phonenumber: String!
+      company_address: String!
+      email: String
+      description: String!
       password: String!
     ): Token!
 
-    signIn(login: String!, password: String!): Token!
+    signIn(username: String!, password: String!): Token!
     updateUser(username: String!): User!
     deleteUser(id: ID!): Boolean!
   }
@@ -25,9 +31,13 @@ export default gql`
 
   type User {
     id: ID!
-    username: String!
-    email: String!
-    role: String
-    messages: [Message!]
+    company_name: String!
+    surname: String!
+    othernames: String!
+    phonenumber: String!
+    company_address: String!
+    email: String
+    description: String!
+    products: [Product!]
   }
 `;
