@@ -31,7 +31,7 @@ export const me = async token =>
     token
       ? {
           headers: {
-            'x-token': token,
+            'token': token,
           },
         }
       : null,
@@ -102,7 +102,7 @@ export const updateUser = async (variables, token) =>
     token
       ? {
           headers: {
-            'x-token': token,
+            'token': token,
           },
         }
       : null,
@@ -122,7 +122,7 @@ export const deleteUser = async (variables, token) =>
     token
       ? {
           headers: {
-            'x-token': token,
+            'token': token,
           },
         }
       : null,

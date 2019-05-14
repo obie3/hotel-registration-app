@@ -21,7 +21,7 @@ app.use(cors());
 app.use(morgan('dev'));
 
 const getMe = async req => {
-  const token = req.headers['x-token'];
+  const token = req.headers['token'];
 
   if (token) {
     try {
@@ -36,6 +36,7 @@ const getMe = async req => {
 
 const server = new ApolloServer({
   introspection: true,
+  playground: true,
   typeDefs: schema,
   resolvers,
   formatError: error => {
