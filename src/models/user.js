@@ -52,7 +52,7 @@ userSchema.index({ phonenumber: 1}, { unique: true});
 
 userSchema.statics.findByLogin = async function(username) {
   let user = await this.findOne({
-    username: username,
+    phonenumber: username,
   });
 
   if (!user) {
