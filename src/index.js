@@ -110,7 +110,6 @@ const createUsersWithMessages = async date => {
     company_name:'Dihweng and Co.',
     company_address: 'nHub Nigeria',
     description: 'General contractor and dealers of all kinds of Products',
-
     role: 'ADMIN',
   });
 
