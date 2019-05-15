@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import { combineResolvers } from 'graphql-resolvers';
 import { AuthenticationError, UserInputError } from 'apollo-server';
 import { isAdmin, isAuthenticated } from './authorization';
+import config from '../config';
 import log from '../utils/Logger';
 
 const createToken = async (user, secret, expiresIn) => {
@@ -15,16 +16,21 @@ const createToken = async (user, secret, expiresIn) => {
 export default {
   Query: {
     users: async (parent, args, { models }) => {
+      log.info(`Searched for all users`);
       return await models.User.find();
     },
     user: async (parent, { id }, { models }) => {
+      log.info(`Searched for profile with id: ${id}`);
       return await models.User.findById(id);
     },
-    me: async (parent, args, { models, me }) => {
-      if (!me) {
-        return null;
+    me: async (parent, args, { models }) => {
+       let data = await jwt.verify(args.token, config.APP_SECRET);
+      if (!data) {
+        log.info(`failed to retrieve profile details`);
+        return {'message':'Invalid Token, Please Signin and Retry'};
       }
-      return await models.User.findById(me.id);
+      log.info(`succesfully retrieved  profile details for ${data.id}`);
+      return await models.User.findById(data.id);
     },
   },
 
@@ -32,6 +38,7 @@ export default {
     signUp: async (parent, args , { models, secret }, ) => {
       let user = new models.User(Object.assign({}, args));
       user = user.save();
+      log.info(`signup successful for  ${args.phonenumber}`);
       return { token: createToken(user, secret, '365d') };
     },
 

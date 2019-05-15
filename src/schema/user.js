@@ -5,7 +5,7 @@ export default gql`
   extend type Query {
     users: [User!]
     user(id: ID!): User
-    me: User
+    me(token: String!):User
   }
 
   extend type Mutation {

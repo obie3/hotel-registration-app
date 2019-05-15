@@ -22,7 +22,6 @@ app.use(morgan('dev'));
 
 const getMe = async req => {
   const token = req.headers['token'];
-
   if (token) {
     try {
       return await jwt.verify(token, config.APP_SECRET);
@@ -101,8 +100,6 @@ connectDb().then(async () => {
 );
 
 const createUsersWithMessages = async date => {
-
-
 
   const user1 = new models.User({
     email: 'admin@gmail.com',
