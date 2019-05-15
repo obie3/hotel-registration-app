@@ -1,2 +1,4 @@
 {"level":"info","message":" login successful for eddie@gmail.com","timestamp":"2019-05-15T05:10:37.494Z"}
 {"level":"info","message":"succesfully retrieved  profile details for 5cdb25012f09f949b0d72c75","timestamp":"2019-05-15T05:11:08.488Z"}
+{"level":"info","message":"Starting BPP_SURVEY  server","timestamp":"2019-05-15T05:16:38.646Z"}
+{"level":"info","message":"Started BPP_SURVEY server on port 3000.","timestamp":"2019-05-15T05:16:39.320Z"}

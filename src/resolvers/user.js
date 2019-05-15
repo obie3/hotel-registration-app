@@ -36,6 +36,8 @@ export default {
 
   Mutation: {
     signUp: async (parent, args , { models, secret }, ) => {
+      log.info(`trying to signup`);
+      console.log({args})
       let user = new models.User(Object.assign({}, args));
       user = user.save();
       log.info(`signup successful for  ${args.phonenumber}`);
