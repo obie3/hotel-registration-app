@@ -90,7 +90,7 @@ connectDb().then(async () => {
     models.Product.deleteMany({}),
   ]);
 
-  createUsersWithMessages(new Date());
+  //createUsersWithMessages(new Date());
   httpServer.listen(config.port, () => {
     log.info(`Started ${config.serviceName} server on port ${config.port}.`);
 

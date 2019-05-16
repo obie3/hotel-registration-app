@@ -23,7 +23,7 @@ const connectDb = () => {
   );
 };
 
- mongoose.connection.dropDatabase();
+ //mongoose.connection.dropDatabase();
 
 
 const models = { User, Product };
