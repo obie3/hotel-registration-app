@@ -23,7 +23,7 @@ app.use(morgan('dev'));
 const getMe = async req => {
   const token = req.headers['token'];
   console.log({req})
-  if (typeof token !== 'undefined') {
+  if (token) {
     try {
       return await jwt.verify(token, config.APP_SECRET);
     } catch (e) {
