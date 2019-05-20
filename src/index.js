@@ -86,8 +86,8 @@ server.installSubscriptionHandlers(httpServer);
 
 connectDb().then(async () => {
   await Promise.all([
-    models.User.deleteMany({}),
-    models.Product.deleteMany({}),
+  //  models.User.deleteMany({}),
+  //  models.Product.deleteMany({}),
   ]);
 
   //createUsersWithMessages(new Date());
