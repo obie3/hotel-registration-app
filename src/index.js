@@ -22,7 +22,6 @@ app.use(morgan('dev'));
 
 const getMe = async req => {
   const token = req.headers['token'];
-  console.log({req})
   if (token) {
     try {
       return await jwt.verify(token, config.APP_SECRET);
@@ -40,8 +39,6 @@ const server = new ApolloServer({
   typeDefs: schema,
   resolvers,
   formatError: error => {
-    // remove the internal sequelize error message
-    // leave only the important validation error
     const message = error.message
       .replace('SequelizeValidationError: ', '')
       .replace('Validation error: ', '');
@@ -65,7 +62,6 @@ const server = new ApolloServer({
 
     if (req) {
       const me = await getMe(req);
-
       return {
         models,
         me,
@@ -87,11 +83,11 @@ server.installSubscriptionHandlers(httpServer);
 
 connectDb().then(async () => {
   await Promise.all([
-  //  models.User.deleteMany({}),
-  //  models.Product.deleteMany({}),
+    models.User.deleteMany({}),
+    models.Product.deleteMany({}),
   ]);
 
-  //createUsersWithMessages(new Date());
+ // createUsersWithMessages(new Date());
   httpServer.listen(config.port, () => {
     log.info(`Started ${config.serviceName} server on port ${config.port}.`);
 
@@ -165,3 +161,5 @@ const createUsersWithMessages = async date => {
   await user1.save();
   await user2.save();
 };
+
+
