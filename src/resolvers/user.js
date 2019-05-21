@@ -29,7 +29,7 @@ export default {
         log.info(`failed to retrieve profile details`);
         return {'message':'Invalid Token, Please Signin and Retry'};
       }
-      log.info(`succesfully retrieved  profile details for ${data.id}`);
+      log.info(`succesfully retrieved  profile details for ${me.id}`);
 
       return await models.User.findById(me.id);
     //   if (!data) {
