@@ -1,12 +1,16 @@
 import { combineResolvers } from 'graphql-resolvers';
 import pubsub, { EVENTS } from '../subscription';
 import { isAuthenticated, isProductOwner } from './authorization';
-
-
 export default {
   Query: {
     products: async (parent, args, { models }) => {  
-      return await models.Product.find();
+      try {
+        return await models.Product.find();
+      }
+      catch(e) {
+        console.log({e})
+      }
+      
     },
 
     product: async (parent, { id }, { models }) => {
@@ -17,7 +21,8 @@ export default {
   Mutation: {
     createProduct: combineResolvers(
       isAuthenticated,
-      async (parent, args , { models, me }) => {        
+      async (parent, args , { models, me }) => {    
+        console.log({me})    
         let product = new models.Product(Object.assign({}, args, {
           userId: me.id,
           company_name: me.company_name,
