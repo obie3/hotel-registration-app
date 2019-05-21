@@ -23,15 +23,22 @@ export default {
       log.info(`Searched for profile with id: ${id}`);
       return await models.User.findById(id);
     },
-    me: async (parent, args, { models }) => {
-       let data = await jwt.verify(args.token, config.APP_SECRET);
-      if (!data) {
+    me: async (parent, args, { models, me }) => {
+      // let data = await jwt.verify(args.token, config.APP_SECRET);
+      if (!me) {
         log.info(`failed to retrieve profile details`);
         return {'message':'Invalid Token, Please Signin and Retry'};
       }
       log.info(`succesfully retrieved  profile details for ${data.id}`);
-      return await models.User.findById(data.id);
-    },
+
+      return await models.User.findById(me.id);
+    //   if (!data) {
+    //     log.info(`failed to retrieve profile details`);
+    //     return {'message':'Invalid Token, Please Signin and Retry'};
+    //   }
+    //   log.info(`succesfully retrieved  profile details for ${data.id}`);
+    //   return await models.User.findById(data.id);
+     },
   },
 
   Mutation: {
