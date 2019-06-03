@@ -9,8 +9,7 @@ export default {
       }
       catch(e) {
         console.log({e})
-      }
-      
+      } 
     },
 
     product: async (parent, { id }, { models }) => {
@@ -60,6 +59,7 @@ export default {
       return await loaders.user.load(product.userId);
     },
   },
+  
 
   Subscription: {
     productCreated: {

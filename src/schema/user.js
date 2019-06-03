@@ -3,7 +3,7 @@ import { gql } from 'apollo-server-express';
 
 export default gql`
   extend type Query {
-    users: [User!]
+    users: [User]
     user(id: ID!): User
     me(token: String!):User
     # me:User
@@ -23,7 +23,7 @@ export default gql`
     ): Token!
 
     signIn(username: String!, password: String!): Token!
-    updateUser(username: String!): User!
+    updateUser(username: String!): User
     deleteUser(id: ID!): Boolean!
   }
 
@@ -32,14 +32,14 @@ export default gql`
   }
 
   type User {
-    id: ID!
-    company_name: String!
-    surname: String!
-    othernames: String!
-    phonenumber: String!
-    company_address: String!
+    id: ID
+    company_name: String
+    surname: String
+    othernames: String
+    phonenumber: String
+    company_address: String
     email: String
-    description: String!
-    products: [Product!]
+    description: String
+    products: [Product]
   }
 `;

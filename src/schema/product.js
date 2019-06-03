@@ -31,14 +31,14 @@ export default gql`
 
   type Product {
     id: ID!
-    name: String!
-    manufacturer: String!
-    price_per_unit: String!
-    category: String!
-    company_name: String!
-    description: String!
-    createdAt: Date!
-    user: User!
+    name: String
+    manufacturer: String
+    price_per_unit: String
+    category: String
+    company_name: String
+    description: String
+    createdAt: Date
+    user: User
   }
 
   extend type Subscription {
