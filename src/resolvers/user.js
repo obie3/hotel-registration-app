@@ -7,7 +7,8 @@ import config from '../config';
 import log from '../utils/Logger';
 
 const createToken = async (user, secret, expiresIn) => {
-  const { id, phonenumber, company_name, role } = user;
+    let { id, phonenumber, company_name, role } = user;
+
   return await jwt.sign({id, phonenumber,  company_name, role}, secret, {
     expiresIn,
   });
@@ -45,10 +46,10 @@ export default {
     signUp: async (parent, args , { models, secret }, ) => {
       log.info(`trying to signup`);
       console.log({args})
-      let user = new models.User(Object.assign({}, args));
-      user = user.save();
+      let user = await new models.User(Object.assign({}, args));
+      user =  await user.save();
       log.info(`signup successful for  ${args.phonenumber}`);
-      return { token: createToken(user, secret, '365d') };
+       return await { token: createToken(user, secret, '365d') };
     },
 
     

@@ -44,12 +44,18 @@ export default {
     updateProduct: combineResolvers(
       isAuthenticated,
       isProductOwner,
-      async (parent, { args }, { models }) => {
+      async (parent, args , { models }) => {
         let product = await models.Product.findOneAndUpdate(
           args.id,
-          Object.assign({}, args)
-        );
+          {"name" : args.name,
+          "description" : args.description,
+          "price_per_unit" : args.price_per_unit, 
+          "manufacturer" : args.manufacturer,
+          "category": args.category},
 
+          {new: true},
+        );
+         console.log ({product})
         if (product) {
           return product;
         } else {
