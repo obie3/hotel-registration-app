@@ -16,7 +16,17 @@ export default gql`
       description: String!   
     ): Product!
     
+    updateProduct(
+      id: ID!
+      name: String
+      manufacturer: String
+      price_per_unit: String
+      category: String
+      description: String
+    ): Product!
+
     deleteProduct(id: ID!): Boolean!
+
   }
 
   type ProductConnection {

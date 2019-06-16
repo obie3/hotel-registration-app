@@ -1,6 +1,7 @@
 import { combineResolvers } from 'graphql-resolvers';
 import pubsub, { EVENTS } from '../subscription';
 import { isAuthenticated, isProductOwner } from './authorization';
+
 export default {
   Query: {
     products: async (parent, args, { models }) => {  
@@ -29,11 +30,31 @@ export default {
 
         product = await product.save(); 
 
-        pubsub.publish(EVENTS.PRODUCT.CREATED, {
-          productCreated: { product },
-        });
+        if(product) {
+          pubsub.publish(EVENTS.PRODUCT.CREATED, {
+            productCreated: { product },
+          });
+          return product;
+        }
+        //throw new Error('Something Went Wromg Please Try Again')  
+      },
+    ),
 
-        return product;
+
+    updateProduct: combineResolvers(
+      isAuthenticated,
+      isProductOwner,
+      async (parent, { args }, { models }) => {
+        let product = await models.Product.findOneAndUpdate(
+          args.id,
+          Object.assign({}, args)
+        );
+
+        if (product) {
+          return product;
+        } else {
+          throw new Error('Error Ocurred During Update');
+        }
       },
     ),
 
