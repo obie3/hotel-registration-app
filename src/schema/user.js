@@ -20,6 +20,7 @@ export default gql`
       email: String
       description: String!
       password: String!
+      role: String
     ): Token!
 
     signIn(username: String!, password: String!): Token!
@@ -28,7 +29,8 @@ export default gql`
   }
 
   type Token {
-    token: String!
+    user:User
+    token:String
   }
 
   type User {
@@ -40,6 +42,7 @@ export default gql`
     company_address: String
     email: String
     description: String
+    role: String
     products: [Product]
   }
 `;

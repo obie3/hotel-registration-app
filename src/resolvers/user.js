@@ -45,11 +45,16 @@ export default {
   Mutation: {
     signUp: async (parent, args , { models, secret }, ) => {
       log.info(`trying to signup`);
-      console.log({args})
       let user = await new models.User(Object.assign({}, args));
       user =  await user.save();
       log.info(`signup successful for  ${args.phonenumber}`);
-       return await { token: createToken(user, secret, '365d') };
+      let token = await  createToken(user, secret, '365d');
+      let result = await {
+        token, user
+      };
+      return await result;
+
+      //  return await { token: createToken(user, secret, '365d') };
     },
 
     
@@ -63,17 +68,21 @@ export default {
       if (!user) {
         log.info(`invalid login credentials by ${username}`);
         throw new UserInputError(
-          'No user found with this login credentials.',
+          'Invalid username/password.',
         );
       }
 
       const isValid = await user.validatePassword(password);
       if (!isValid) {
         log.info(`invalid login password by ${username}`);
-        throw new AuthenticationError('Invalid password.');
+        throw new AuthenticationError('Invalid username/password.');
       }
       log.info(` login successful for ${username}`);
-      return { token: createToken(user, secret, '365d')};
+      let token = await  createToken(user, secret, '365d');
+      let result = await {
+        token, user
+      };
+      return await result;
     },
 
     updateUser: combineResolvers(
