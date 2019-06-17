@@ -82,10 +82,10 @@ const httpServer = http.createServer(app);
 server.installSubscriptionHandlers(httpServer);
 
 connectDb().then(async () => {
-  await Promise.all([
-    models.User.deleteMany({}),
-    models.Product.deleteMany({}),
-  ]);
+  // await Promise.all([
+  //   models.User.deleteMany({}),
+  //   models.Product.deleteMany({}),
+  // ]);
 
  // createUsersWithMessages(new Date());
   httpServer.listen(config.port, () => {
