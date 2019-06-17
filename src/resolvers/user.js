@@ -49,21 +49,15 @@ export default {
       user =  await user.save();
       log.info(`signup successful for  ${args.phonenumber}`);
       let token = await  createToken(user, secret, '365d');
-      let result = await {
+      return await {
         token, user
       };
-      return await result;
-
       //  return await { token: createToken(user, secret, '365d') };
     },
 
     
 
-    signIn: async (
-      parent,
-      { username, password },
-      { models, secret },
-    ) => {
+    signIn: async ( parent, { username, password }, { models, secret }) => {
       const user = await models.User.findByLogin(username);
       if (!user) {
         log.info(`invalid login credentials by ${username}`);
@@ -79,18 +73,17 @@ export default {
       }
       log.info(` login successful for ${username}`);
       let token = await  createToken(user, secret, '365d');
-      let result = await {
+      return await {
         token, user
       };
-      return await result;
     },
 
     updateUser: combineResolvers(
       isAuthenticated,
-      async (parent, { username }, { models, me }) => {
+      async (parent, args, { models, me }) => {
         return await models.User.findByIdAndUpdate(
           me.id,
-          { username },
+          { args },
           { new: true },
         );
       },

@@ -13,11 +13,11 @@ export const isAdmin = combineResolvers(
 );
 
 export const isProductOwner = async (
-  parent,
-  { id },
-  { models, me },
-) => {
-  const product = await models.Product.findById(id);
+    parent,
+    { id },
+    { models, me },
+  ) => {
+    const product = await models.Product.findById(id);
 
   if (product.userId != me.id) {
     throw new ForbiddenError('Not authenticated as owner.');
