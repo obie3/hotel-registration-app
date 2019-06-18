@@ -45,7 +45,22 @@ export default {
   Mutation: {
     signUp: async (parent, args , { models, secret }, ) => {
       log.info(`trying to signup`);
-      let user = await new models.User(Object.assign({}, args));
+
+      let user = await models.user.findOne({email: args.email});
+        if(user) {
+          log.info(`${args.email} is already taken`);
+          throw new AuthenticationError('Email Address already taken .');
+        }
+        else {
+          user = await models.user.findOne({email: args.phonenumber});
+          if(user) {
+            log.info(`${args.phonenumber} is already taken`);
+            throw new AuthenticationError('Phone already Taken .');
+          }
+        }
+
+      
+       user = await new models.User(Object.assign({}, args));
       user =  await user.save();
       log.info(`signup successful for  ${args.phonenumber}`);
       let token = await  createToken(user, secret, '365d');
