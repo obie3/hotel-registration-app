@@ -5,8 +5,8 @@ export default gql`
   extend type Query {
     users: [User]
     user(id: ID!): User
-    me(token: String!):User
-    # me:User
+    #me(token: String!):User
+     me:User
 
   }
 
