@@ -46,13 +46,13 @@ export default {
     signUp: async (parent, args , { models, secret }, ) => {
       log.info(`trying to signup`);
 
-      let user = await models.user.findOne({email: args.email});
+      let user = await models.User.findOne({email: args.email});
         if(user) {
           log.info(`${args.email} is already taken`);
           throw new AuthenticationError('Email Address already taken .');
         }
         else {
-          user = await models.user.findOne({email: args.phonenumber});
+          user = await models.User.findOne({email: args.phonenumber});
           if(user) {
             log.info(`${args.phonenumber} is already taken`);
             throw new AuthenticationError('Phone already Taken .');
@@ -60,7 +60,7 @@ export default {
         }
 
       
-       user = await new models.User(Object.assign({}, args));
+      user = await new models.User(Object.assign({}, args));
       user =  await user.save();
       log.info(`signup successful for  ${args.phonenumber}`);
       let token = await  createToken(user, secret, '365d');
