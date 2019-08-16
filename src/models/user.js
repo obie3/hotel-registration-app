@@ -48,16 +48,16 @@ const userSchema = new mongoose.Schema({
 );
 
 
-userSchema.index({ phonenumber: 1}, { unique: true});
+userSchema.index({ email: 1}, { unique: true});
 
 userSchema.statics.findByLogin = async function(username) {
   let user = await this.findOne({
-    phonenumber: username,
+    email: username,
   });
 
-  if (!user) {
-    user = await this.findOne({ email: username });
-  }
+  // if (!user) {
+  //   user = await this.findOne({ email: username });
+  // }
 
   return user;
 };

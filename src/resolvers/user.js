@@ -51,13 +51,13 @@ export default {
           log.info(`${args.email} is already taken`);
           throw new AuthenticationError('Email Address already taken .');
         }
-        else {
-          user = await models.User.findOne({email: args.phonenumber});
-          if(user) {
-            log.info(`${args.phonenumber} is already taken`);
-            throw new AuthenticationError('Phone already Taken .');
-          }
-        }
+        // else {
+        //   user = await models.User.findOne({phonenumber: args.phonenumber});
+        //   if(user) {
+        //     log.info(`${args.phonenumber} is already taken`);
+        //     throw new AuthenticationError('Phone already Taken .');
+        //   }
+        // }
 
       
       user = await new models.User(Object.assign({}, args));
