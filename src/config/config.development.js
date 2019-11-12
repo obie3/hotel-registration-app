@@ -11,5 +11,4 @@ const config = {
     },
     pubsubDriver: process.env["PUB_SUB_DRIVER"] || "redis", //{SNS}
 };
-
 module.exports = Object.assign({},config, require("./base"));
