@@ -46,10 +46,10 @@ export default {
     signUp: async (parent, args , { models, secret }, ) => {
       log.info(`trying to signup`);
 
-      let user = await models.User.findOne({email: args.email});
+      let user = await models.User.findOne({phonenumber: args.phonenumber});
         if(user) {
           log.info(`${args.email} is already taken`);
-          throw new AuthenticationError('Email Address already taken .');
+          throw new AuthenticationError('User Already Exist.');
         }
         // else {
         //   user = await models.User.findOne({phonenumber: args.phonenumber});
