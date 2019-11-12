@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server-express';
 import userSchema from './user';
-import productSchema from './product';
+import hotelSchema from './hotels';
 
 const linkSchema = gql`
   scalar Date
@@ -18,4 +18,4 @@ const linkSchema = gql`
   }
 `;
 
-export default [linkSchema, userSchema, productSchema];
+export default [linkSchema, userSchema, hotelSchema];

@@ -7,9 +7,9 @@ import config from '../config';
 import log from '../utils/Logger';
 
 const createToken = async (user, secret, expiresIn) => {
-    let { id, phonenumber, company_name, role } = user;
+    let { id, phonenumber, surname, role } = user;
 
-  return await jwt.sign({id, phonenumber,  company_name, role}, secret, {
+  return await jwt.sign({id, phonenumber, surname, role}, secret, {
     expiresIn,
   });
 };
@@ -112,7 +112,8 @@ export default {
         if (user) {
           await user.remove();
           return true;
-        } else {
+        } 
+        else {
           return false;
         }
       },
@@ -120,8 +121,8 @@ export default {
   },
 
   User: {
-    products: async (user, args, { models }) => {
-      return await models.Product.find({
+    hotels: async (user, args, { models }) => {
+      return await models.Hotel.find({
         userId: user.id,
       });
     },

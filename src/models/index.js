@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import config from '../config';
 import User from './user';
-import Product from './product';
+import Hotel from './hotel';
 
 
 const configuration = {  
@@ -24,10 +24,10 @@ const connectDb = () => {
   );
 };
 
- //mongoose.connection.dropDatabase();
+//mongoose.connection.dropDatabase();
 
 
-const models = { User, Product };
+const models = { User, Hotel };
 
 export { connectDb };
 

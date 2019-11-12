@@ -1,29 +1,28 @@
 import mongoose from 'mongoose';
 
-const productSchema = new mongoose.Schema({
+const hotelSchema = new mongoose.Schema({
 
     name: {
         type: String,
     },
 
-    manufacturer: {
+    address: {
         type: String,
     },
 
-    price_per_unit: {
-        type: String,
-    },
-
-    category: {
-        type: String,
-
-    },
-
-    company_name: {
+    phone_number: {
         type: String,
     },
 
     description: {
+        type: String,
+    },
+
+    street_name: {
+        type: String,
+    },
+
+    category: {
         type: String,
     },
 
@@ -35,6 +34,6 @@ const productSchema = new mongoose.Schema({
     timestamps: true,
 }, );
 
-const Product = mongoose.model('Product', productSchema);
+const Hotel = mongoose.model('Hotel', hotelSchema);
 
-export default Product;
+export default Hotel;

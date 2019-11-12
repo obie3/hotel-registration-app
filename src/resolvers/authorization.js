@@ -2,7 +2,7 @@ import { ForbiddenError } from 'apollo-server';
 import { combineResolvers, skip } from 'graphql-resolvers';
 
 export const isAuthenticated = (parent, args, { me }) =>
-  me ? skip : new ForbiddenError('Login to create Products.');
+  me ? skip : new ForbiddenError('Login to create Hotels.');
 
 export const isAdmin = combineResolvers(
   isAuthenticated,
@@ -12,14 +12,14 @@ export const isAdmin = combineResolvers(
       : new ForbiddenError('Not authorized as admin.'),
 );
 
-export const isProductOwner = async (
+export const isHotelOwner = async (
     parent,
     { id },
     { models, me },
   ) => {
-    const product = await models.Product.findById(id);
+    const hotel = await models.Hotel.findById(id);
 
-  if (product.userId != me.id) {
+  if (hotel.userId != me.id) {
     throw new ForbiddenError('Not authenticated as owner.');
   }
 

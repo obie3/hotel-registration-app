@@ -12,13 +12,9 @@ export default gql`
 
   extend type Mutation {
     signUp(
-      company_name: String!
       surname: String!
       othernames: String!
       phonenumber: String!
-      company_address: String!
-      email: String
-      description: String!
       password: String!
       role: String
     ): Token!
@@ -35,14 +31,10 @@ export default gql`
 
   type User {
     id: ID
-    company_name: String
     surname: String
     othernames: String
     phonenumber: String
-    company_address: String
-    email: String
-    description: String
     role: String
-    products: [Product]
+    hotels: [Hotel]
   }
 `;

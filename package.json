@@ -1,5 +1,5 @@
 {
-  "name": "fullstack-apollo-express-postgresql-boilerplate",
+  "name": "hotel-registration-app",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -13,15 +13,8 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "keywords": [],
-  "author": "Robin Wieruch <hello@rwieruch.com> (https://www.robinwieruch.de)",
+  "author": "Eddie",
   "license": "ISC",
-  "devDependencies": {
-    
-    "axios": "^0.18.0",
-    "chai": "^4.2.0",
-    "mocha": "^5.2.0",
-    "morgan": "^1.9.1"
-  },
   "dependencies": {
     "apollo-server": "^2.2.3",
     "apollo-server-express": "^2.2.3",

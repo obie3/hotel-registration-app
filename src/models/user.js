@@ -4,10 +4,6 @@ import bcrypt from 'bcrypt';
 import isEmail from 'validator/lib/isEmail';
 
 const userSchema = new mongoose.Schema({
-  
-  company_name: {
-    type: String,
-  },
 
   surname: {
     type: String,
@@ -18,17 +14,6 @@ const userSchema = new mongoose.Schema({
   },
 
   phonenumber: {
-    type: String,
-  },
-
-  company_address: {
-    type: String,
-  },
-  email: {
-    type: String,
-  },
-
-  description: {
     type: String,
   },
 
@@ -52,7 +37,7 @@ userSchema.index({ email: 1}, { unique: true});
 
 userSchema.statics.findByLogin = async function(username) {
   let user = await this.findOne({
-    email: username,
+    phonenumber: username,
   });
 
   // if (!user) {
@@ -63,7 +48,7 @@ userSchema.statics.findByLogin = async function(username) {
 };
 
 userSchema.pre('remove', function(next) {
-  this.model('Product').deleteMany({ userId: this._id }, next);
+  this.model('Hotel').deleteMany({ userId: this._id }, next);
 });
 
 userSchema.pre('save', async function() {
