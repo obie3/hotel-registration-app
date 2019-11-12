@@ -7,7 +7,7 @@ const config = {
     //serviceURL: process.env.MICROSERVICE_URL,
     port: process.env.PORT || 3000,
     db: {
-        url: process.env["DATABASE_URL"],
+        url: process.env["MONGODB_URI"],
     },
     pubsubDriver: process.env["PUB_SUB_DRIVER"] || "redis", //{SNS}
 };
