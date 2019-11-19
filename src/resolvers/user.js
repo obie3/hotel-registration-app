@@ -9,7 +9,7 @@ import log from '../utils/Logger';
 const createToken = async (user, secret, expiresIn) => {
     let { id, phonenumber, surname, role } = user;
 
-  return await jwt.sign({id, phonenumber, surname, role}, secret, {
+  return jwt.sign({id, phonenumber, surname, role}, secret, {
     expiresIn,
   });
 };

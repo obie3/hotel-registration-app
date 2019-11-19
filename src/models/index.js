@@ -3,7 +3,6 @@ import config from '../config';
 import User from './user';
 import Hotel from './hotel';
 
-
 const configuration = {  
   useNewUrlParser: true ,
   useCreateIndex: true,
@@ -16,7 +15,6 @@ const configuration = {
   socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
 }
 
-
 const connectDb = () => {
   return mongoose.connect(
     config.db.url,
@@ -24,8 +22,7 @@ const connectDb = () => {
   );
 };
 
-mongoose.connection.dropDatabase();
-
+//mongoose.connection.dropDatabase();
 
 const models = { User, Hotel };
 

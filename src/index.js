@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 import DataLoader from 'dataloader';
 import express from 'express';
 import config from './config';
-import {ApolloServer, AuthenticationError,} from 'apollo-server-express';
+import {ApolloServer, AuthenticationError} from 'apollo-server-express';
 import log from './utils/Logger';
 import schema from './schema';
 import resolvers from './resolvers';
@@ -24,8 +24,9 @@ const getMe = async req => {
   const token = req.headers['token'];
   if (token) {
     try {
-      return await jwt.verify(token, config.APP_SECRET);
-    } catch (e) {
+      return jwt.verify(token, config.APP_SECRET);
+    } 
+    catch (e) {
       throw new AuthenticationError(
         'Your session expired. Sign in again.',
       );
@@ -90,7 +91,6 @@ connectDb().then(async () => {
  // createUsersWithMessages(new Date());
   httpServer.listen(config.port, () => {
     log.info(`Started ${config.serviceName} server on port ${config.port}.`);
-
   });
 }).catch((error)=>
   log.error(`${error} while connecting to the DB `)
