@@ -64,7 +64,7 @@ export default {
       user =  await user.save();
       log.info(`signup successful for  ${args.phonenumber}`);
       let token = await  createToken(user, secret, '365d');
-      return await {
+      return {
         token, user
       };
       //  return await { token: createToken(user, secret, '365d') };
